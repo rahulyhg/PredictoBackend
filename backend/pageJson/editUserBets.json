@@ -1,0 +1,95 @@
+{
+    "title": "Edit UserBets",
+    "name": "UserBets",
+    "jsonPage": "viewUserBets",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+            "name": "Match No",
+            "type": "tags",
+            "tableRef": "match",
+            "dropDownType": "single",
+            "dropDownField": "matchNumber",
+            "searchApi": "searchCall",
+            "placeholder": "Select User Name ",
+            "id": "match",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": "Match/search"
+        }, {
+            "name": "User",
+            "type": "tags",
+            "tableRef": "user",
+            "dropDownType": "single",
+            "dropDownField": "name",
+            "searchApi": "searchCall",
+            "placeholder": "Select User Name ",
+            "id": "user",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": "User/search"
+        }, {
+            "name": "Select Bets",
+            "type": "tags",
+            "tableRef": "betType",
+            "dropDownType": "single",
+            "dropDownField": "betName",
+            "searchApi": "searchCall",
+            "placeholder": "Enter Bet Name ",
+            "id": "betType",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": "BetType/search"
+        },
+        {
+            "name": "Status",
+            "type": "tags",
+            "tableRef": "status",
+            "placeholder": "Enter status",
+            "id": "status",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["'betMade", "betLocked", "betWon", "betLost"],
+            "url": ""
+        }
+    ],
+    "action": [{
+        "name": "submit",
+        "action": "submitUserBets",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewUserBets"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewUserBets"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "UserBets/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "UserBets/getOne",
+        "params": "_id"
+    }
+
+}

@@ -1,0 +1,80 @@
+{
+    "title": "Edit BetType",
+    "name": "BetType",
+    "jsonPage": "viewBetType",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Bet Name",
+        "type": "text",
+        "tableRef": "betName",
+        "placeholder": "Enter Bet",
+        "id": "betName",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Description",
+        "type": "text",
+        "tableRef": "description",
+        "placeholder": "Enter descrption",
+        "id": "description",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Participation Points",
+        "type": "number",
+        "tableRef": "participationPoints",
+        "placeholder": "Enter points",
+        "id": "participationPoints",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Win Points",
+        "type": "number",
+        "tableRef": "winPoints",
+        "placeholder": "Enter win points",
+        "id": "winPoints",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Options",
+        "type": "tags",
+        "tableRef": "options",
+        "placeholder": "select winner",
+        "id": "options",
+        "url": "",
+        "dropDownField": "",
+        "dropDownType": "single",
+        "onView": true,
+        "dropDown": [""]
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitBetType",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewBetType"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewBetType"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "BetType/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "BetType/getOne",
+        "params": "_id"
+    }
+
+}

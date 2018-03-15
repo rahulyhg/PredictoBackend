@@ -1,0 +1,71 @@
+{
+    "title": "UserBets",
+    "description": "List of UserBets",
+    "pageType": "view",
+    "sendIdWithCreate": true,
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Match No.",
+        "isSort": "",
+        "tableRef": "match.matchNumber"
+    }, {
+        "name": "User",
+        "isSort": "",
+        "tableRef": "user.name"
+    }, {
+        "name": "Bet Type",
+        "isSort": "",
+        "tableRef": "betType.betName"
+    }, {
+        "name": "Status",
+        "isSort": "",
+        "tableRef": "status"
+    }],
+    "action": [{
+        "name": "edit",
+        "icon": "fa-pencil",
+        "buttonClass": "btn-primary",
+        "type": "page",
+        "action": "editUserBets",
+        "fieldsToSend": {
+            "_id": "_id"
+        }
+    }, {
+        "name": "delete",
+        "icon": "fa-trash",
+        "buttonClass": "btn-danger",
+        "type": "apiCallConfirm",
+        "title": "Delete UserBets",
+        "content": "Are you sure you want to delete UserBets?",
+        "api": "UserBets/delete",
+        "fieldsToSend": {
+            "name": "_id",
+            "value": "_id"
+        }
+    }],
+    "button": [{
+        "name": "Excel Export",
+        "icon": "print",
+        "class": "btn-danger",
+        "type": "redirect",
+        "action": "UserBets/generateExcel",
+        "linkType": "admin"
+    }, {
+        "name": "Upload Excel",
+        "icon": "delete",
+        "class": "btn-warning",
+        "type": "redirect",
+        "action": "excel-upload/UserBets",
+        "linkType": "internal"
+    }, {
+        "name": "Create",
+        "icon": "plus",
+        "class": "btn-success",
+        "type": "page",
+        "action": "createUserBets"
+    }],
+    "apiCall": {
+        "url": "UserBets/search",
+        "params": "_id"
+    }
+}

@@ -1,0 +1,72 @@
+{
+    "title": "Match",
+    "description": "List of Matchs",
+    "pageType": "view",
+    "sendIdWithCreate": true,
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Match No",
+        "isSort": "",
+        "tableRef": "matchNumber"
+    }, {
+        "name": "Team1",
+        "isSort": "",
+        "tableRef": "team1.teamName"
+
+    }, {
+        "name": "Team2",
+        "isSort": "",
+        "tableRef": "team2.teamName"
+    }, {
+        "name": "Starting Time",
+        "isSort": "",
+        "tableRef": "startingTime"
+    }],
+    "action": [{
+        "name": "edit",
+        "icon": "fa-pencil",
+        "buttonClass": "btn-primary",
+        "type": "page",
+        "action": "editMatch",
+        "fieldsToSend": {
+            "_id": "_id"
+        }
+    }, {
+        "name": "delete",
+        "icon": "fa-trash",
+        "buttonClass": "btn-danger",
+        "type": "apiCallConfirm",
+        "title": "Delete Match",
+        "content": "Are you sure you want to delete Match?",
+        "api": "Match/delete",
+        "fieldsToSend": {
+            "name": "_id",
+            "value": "_id"
+        }
+    }],
+    "button": [{
+        "name": "Excel Export",
+        "icon": "print",
+        "class": "btn-danger",
+        "type": "redirect",
+        "action": "Match/generateExcel",
+        "linkType": "admin"
+    }, {
+        "name": "Upload Excel",
+        "icon": "delete",
+        "class": "btn-warning",
+        "type": "redirect",
+        "action": "excel-upload/Match",
+        "linkType": "internal"
+    }, {
+        "name": "Create",
+        "icon": "plus",
+        "class": "btn-success",
+        "type": "page",
+        "action": "createMatch"
+    }],
+    "apiCall": {
+        "url": "Match/search",
+        "params": "_id"
+    }
+}

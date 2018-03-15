@@ -1,0 +1,67 @@
+{
+    "title": "Team",
+    "description": "List of Teams",
+    "pageType": "view",
+    "sendIdWithCreate": true,
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Team Name",
+        "isSort": "",
+        "tableRef": "teamName"
+    }, {
+        "name": "Poster",
+        "isSort": "",
+        "tableRef": "poster"
+    }, {
+        "name": "Short Name",
+        "isSort": "",
+        "tableRef": "shortName"
+    }],
+    "action": [{
+        "name": "edit",
+        "icon": "fa-pencil",
+        "buttonClass": "btn-primary",
+        "type": "page",
+        "action": "editTeam",
+        "fieldsToSend": {
+            "_id": "_id"
+        }
+    }, {
+        "name": "delete",
+        "icon": "fa-trash",
+        "buttonClass": "btn-danger",
+        "type": "apiCallConfirm",
+        "title": "Delete Team",
+        "content": "Are you sure you want to delete Team?",
+        "api": "Team/delete",
+        "fieldsToSend": {
+            "name": "_id",
+            "value": "_id"
+        }
+    }],
+    "button": [{
+        "name": "Excel Export",
+        "icon": "print",
+        "class": "btn-danger",
+        "type": "redirect",
+        "action": "Team/generateExcel",
+        "linkType": "admin"
+    }, {
+        "name": "Upload Excel",
+        "icon": "delete",
+        "class": "btn-warning",
+        "type": "redirect",
+        "action": "excel-upload/Team",
+        "linkType": "internal"
+    }, {
+        "name": "Create",
+        "icon": "plus",
+        "class": "btn-success",
+        "type": "page",
+        "action": "createTeam"
+    }],
+    "apiCall": {
+        "url": "Team/search",
+        "params": "_id"
+    }
+}
