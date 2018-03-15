@@ -184,6 +184,19 @@ var model = {
      */
     getAllMedia: function (data, callback) {
 
+    },
+    leaderBoard: function (data, callback1) {
+        User.find().sort('-points').exec(function (err, found) {
+            // console.log("FFFFFFFFFFFFFFFf", found)
+            if (err) {
+                callback1(err, null);
+            } else if (_.isEmpty(found)) {
+                callback1("noDataound", null);
+            } else {
+                console.log("found*************", found);
+                callback1(null, found);
+            }
+        });
     }
 };
 module.exports = _.assign(module.exports, exports, model);

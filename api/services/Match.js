@@ -48,5 +48,19 @@ schema.plugin(timestamps);
 module.exports = mongoose.model('Match', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "team1 team2", "team1 team2", "order", "asc"));
-var model = {};
+var model = {
+    allMatches: function (data, callback1) {
+        Match.find().deepPopulate('team1 team2').sort('startingTime').exec(function (err, found) {
+            // console.log("FFFFFFFFFFFFFFFf", found)
+            if (err) {
+                callback1(err, null);
+            } else if (_.isEmpty(found)) {
+                callback1("noDataound", null);
+            } else {
+                console.log("found*************", found);
+                callback1(null, found);
+            }
+        });
+    },
+};
 module.exports = _.assign(module.exports, exports, model);
