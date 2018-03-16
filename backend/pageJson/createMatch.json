@@ -45,7 +45,7 @@
         "url": "Team/search"
     }, {
         "name": "Starting Time",
-        "type": "date",
+        "type": "time",
         "tableRef": "startingTime",
         "placeholder": "Enter Start Time",
         "id": "startingTime",

@@ -85,7 +85,7 @@ global.Schema = mongoose.Schema;
 
 
 global.http = require('http');
-
+global.bcrypt = require('bcrypt');
 
 // Storage
 global.skipper = require('skipper-gclouds');

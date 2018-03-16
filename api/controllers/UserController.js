@@ -101,6 +101,105 @@ var controller = {
     sendmail: function (req, res) {
         Config.sendEmail("chintan@wohlig.com", "jagruti@wohlig.com", "first email from endgrid", "", "<html><body>dome content</body></html>");
     },
+    saveNewPassword: function (req, res) {
+        if (req.body) {
+            User.saveNewPassword(req.body.password, req.body.mobile, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
+    sendOtp: function (req, res) {
+        if (req.body) {
+            User.sendOtp(req.body.mobile, req.body.userId, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
+    verifyOTPForResetPass: function (req, res) {
+        if (req.body) {
+            User.verifyOTPForResetPass(req.body.otp, req.body._id, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
+    getUser: function (req, res) {
+        if (req.body) {
+            User.getUser(req.body.userEmail, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
+    VerifyUser: function (req, res) {
+        if (req.body) {
+            User.VerifyUser(req.body.email, req.body.password, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
+    saveUser: function (req, res) {
+        if (req.body) {
+            User.saveUser(req.body.name, req.body.email, req.body.userName, req.body.mobile, req.body.password, req.body._id, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
+    getUserforSocailLogin: function (req, res) {
+        if (req.body) {
+            console.log("is ide ctrl");
+            User.getUserforSocailLogin(req.body.screenName, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
+    getUserforSocailLoginFacebook: function (req, res) {
+        if (req.body) {
+            console.log("is ide ctrl");
+            User.getUserforSocailLoginFacebook(req.body.email, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
+
     leaderBoard: function (req, res) {
         if (req.body) {
             User.leaderBoard(req.body, res.callback);

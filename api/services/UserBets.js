@@ -18,6 +18,9 @@ var schema = new Schema({
         type: String,
         enum: ['betMade', 'betLocked', 'betWon', 'betLost']
 
+    },
+    answer: {
+        type: Number
     }
 });
 
