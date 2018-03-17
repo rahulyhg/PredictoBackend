@@ -20,6 +20,10 @@
         "name": "Status",
         "isSort": "",
         "tableRef": "status"
+    }, {
+        "name": "Answer",
+        "isSort": "",
+        "tableRef": "answer"
     }],
     "action": [{
         "name": "edit",

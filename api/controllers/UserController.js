@@ -113,30 +113,6 @@ var controller = {
             });
         }
     },
-    sendOtp: function (req, res) {
-        if (req.body) {
-            User.sendOtp(req.body.mobile, req.body.userId, res.callback);
-        } else {
-            res.json({
-                value: false,
-                data: {
-                    message: "Invalid Request"
-                }
-            });
-        }
-    },
-    verifyOTPForResetPass: function (req, res) {
-        if (req.body) {
-            User.verifyOTPForResetPass(req.body.otp, req.body._id, res.callback);
-        } else {
-            res.json({
-                value: false,
-                data: {
-                    message: "Invalid Request"
-                }
-            });
-        }
-    },
     getUser: function (req, res) {
         if (req.body) {
             User.getUser(req.body.userEmail, res.callback);
@@ -149,9 +125,9 @@ var controller = {
             });
         }
     },
-    VerifyUser: function (req, res) {
-        if (req.body) {
-            User.VerifyUser(req.body.email, req.body.password, res.callback);
+    login: function (req, res) {
+        if (req.body && req.body.mobile && req.body.mobile !== '' && req.body.password && req.body.password !== '') {
+            User.doLogin(req.body, res.callback);
         } else {
             res.json({
                 value: false,
@@ -161,9 +137,27 @@ var controller = {
             });
         }
     },
-    saveUser: function (req, res) {
+    registerUser: function (req, res) {
+        function callback(err, data) {
+
+            if (data) {
+                res.json({
+                    value: true,
+                    data: {
+                        message: "Registration Successful!"
+                    }
+                });
+            } else {
+                res.json({
+                    value: false,
+                    data: {
+                        message: "Registration Failed!"
+                    }
+                });
+            }
+        }
         if (req.body) {
-            User.saveUser(req.body.name, req.body.email, req.body.userName, req.body.mobile, req.body.password, req.body._id, res.callback);
+            User.registerUser(req.body, callback);
         } else {
             res.json({
                 value: false,
@@ -173,6 +167,7 @@ var controller = {
             });
         }
     },
+
     getUserforSocailLogin: function (req, res) {
         if (req.body) {
             console.log("is ide ctrl");

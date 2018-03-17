@@ -62,6 +62,14 @@
             "onView": true,
             "dropDown": ["'betMade", "betLocked", "betWon", "betLost"],
             "url": ""
+        }, {
+            "name": "Answer",
+            "type": "text",
+            "tableRef": "answer",
+            "placeholder": "Enter Answer",
+            "id": "answer",
+            "validation": ["required", "trim", "unique"],
+            "url": ""
         }
     ],
     "action": [{

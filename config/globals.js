@@ -85,8 +85,9 @@ global.Schema = mongoose.Schema;
 
 
 global.http = require('http');
+global.mongoosePagination = require('mongoose-pagination');
 global.bcrypt = require('bcrypt');
-
+global.session = require('express-session');
 // Storage
 global.skipper = require('skipper-gclouds');
 global.gCloudKey = './config/storage/googleCloudStorageKey.json';

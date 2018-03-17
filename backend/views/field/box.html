@@ -16,21 +16,21 @@
             </thead>
             <tbody>
                 <tr ng-repeat="data in model">
-                    {{model[0]}}111111111
+
                     <td ng-repeat="field2 in type.fields" ng-if="field2.onView && field2.type == 'selectFromTable'"> {{data[field2.tableRef+'-nameOnly']}}</td>
                     <td ng-repeat="field2 in type.fields" ng-if="field2.onView && field2.type != 'selectFromTable'">{{data[field2.tableRef}}
                         <view-field type="field2" value="data"></view-field>
                     </td>
-                      <td ng-repeat="field2 in type.fields">{{field2}}
+                    <td ng-repeat="field2 in type.fields">{{field2}}
                     </td>
-                        <td>
-                            <a class="btn btn-primary" ng-click="editBox('Edit',data)">
+                    <td>
+                        <a class="btn btn-primary" ng-click="editBox('Edit',data)">
                                 <i class="fa fa-pencil"></i>
                             </a>
-                            <a class="btn btn-danger" ng-click="deleteBox($index, model)">
+                        <a class="btn btn-danger" ng-click="deleteBox($index, model)">
                                 <i class="fa fa-trash"></i>
                             </a>
-                        </td>
+                    </td>
                 </tr>
             </tbody>
         </table>
