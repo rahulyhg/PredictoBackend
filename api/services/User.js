@@ -253,11 +253,11 @@ var model = {
         var user = this(data);
         user.accessToken = [uid(16)];
         user.password = md5(user.password);
-        if (user.drone) {
-            user.lisence = "NDB";
-        } else {
-            user.lisence = "UDB";
-        }
+        // if (user.drone) {
+        //     user.lisence = "NDB";
+        // } else {
+        //     user.lisence = "UDB";
+        // }
         user.save(function (err, created) {
             if (err) {
                 callback(err, null);

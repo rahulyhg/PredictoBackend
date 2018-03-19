@@ -64,6 +64,13 @@
             "onView": true,
             "dropDown": ["team1", "team2", "tie"]
         }, {
+            "name": "Toss Winner",
+            "type": "number",
+            "tableRef": "tossWinner",
+            "placeholder": "select toss winner",
+            "id": "tossWinner",
+            "url": ""
+        }, {
             "name": "First Inning Score",
             "type": "tags",
             "tableRef": "firstInningScore",
