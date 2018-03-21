@@ -58,52 +58,52 @@ var model = {
         });
     },
     updatePoints: function (data, callback1) {
-
         UserBets.find({
             match: data.id
-        }).deepPopulate('match betType user').exec(function (err, found1) {
+        }).deepPopulate('match betType user').exec(function (err, found) {
             if (err) {
                 callback1(err, null);
-            } else if (_.isEmpty(found1)) {
+            } else if (_.isEmpty(found)) {
                 callback1("noDataound", null);
             } else {
-                // if (found1[0].match.tossWinner == 2) {
-                //     console.log("in if");
-                //     console.log("found*************", found1[0]);
-                //     callback1(null, found1[0]);
-                //     if (found1[0].betType.betName == '1st inning score' && found1[0].answer == 2) {
-
-                //     }
-                // }
-                async.forEach(found1, function (item, index, arr) {
-                    console.log("data", item, index, arr);
-                    if (item.match.tossWinner == '1') {
-
-                    } else if (item.match.tossWinner == '2') {
-                        console.log("points=", item.user.points);
-                        User.aggregate().project({
-
-                            "updatedpoints": {
-                                points: {
-                                    $add: item.betType.winPoints
-                                }
+                //console.log("data", found);
+                //callback1(null, found);
+                async.forEach(found, function (item, index, arr) {
+                    if (item.betType.betName == 'Toss Winner' && ((item.match.tossWinner == '2' && item.answer == 2) || (item.match.tossWinner == '1' && item.answer == 1))) {
+                        User.update({
+                            _id: item.user._id
+                        }, {
+                            $inc: {
+                                points: item.betType.winPoints
                             }
-
-                        }).exec(function (err, found) {
+                        }).exec(function (err, found1) {
                             // console.log("FFFFFFFFFFFFFFFf", found)
                             if (err) {
                                 callback1(err, null);
-                            } else if (_.isEmpty(found)) {
+                            } else if (_.isEmpty(found1)) {
                                 callback1("noDataound", null);
                             } else {
-                                console.log("found*************", found);
-                                User.findOneAndUpdate({
-                                    _id: item.user._id
-                                }, {
-                                    $set: {
-                                        points: updatedpoints
-                                    }
-                                })
+                                console.log("found*************", found1);
+                                //callback1(null, found1);
+                            }
+                        });
+                    }
+                    if (item.betType.betName == 'Winner' && ((item.match.winner == 'team1' && item.answer == 1) || (item.match.winner == 'team2' && item.answer == 2) || ((item.match.winner == 'tie' && item.answer == 3)))) {
+                        User.update({
+                            _id: item.user._id
+                        }, {
+                            $inc: {
+                                points: item.betType.winPoints
+                            }
+                        }).exec(function (err, found1) {
+                            // console.log("FFFFFFFFFFFFFFFf", found)
+                            if (err) {
+                                callback1(err, null);
+                            } else if (_.isEmpty(found1)) {
+                                callback1("noDataound", null);
+                            } else {
+                                console.log("found*************", found1);
+                                //callback1(null, found1);
                             }
                         });
                     }
@@ -111,9 +111,44 @@ var model = {
                 });
 
             }
+
+            callback1(null, "points updated successfully");
         });
 
+    },
+    updateParticipatePoints: function (data, callback1) {
+        UserBets.find({
+            match: data.id
+        }).deepPopulate('match betType user').exec(function (err, found) {
+            if (err) {
+                callback1(err, null);
+            } else if (_.isEmpty(found)) {
+                callback1("noDataound", null);
+            } else {
+                async.forEach(found, function (item, index, arr) {
+                    User.update({
+                        _id: item.user._id
+                    }, {
+                        $inc: {
+                            points: item.betType.participationPoints
+                        }
+                    }).exec(function (err, found1) {
+                        // console.log("FFFFFFFFFFFFFFFf", found)
+                        if (err) {
+                            callback1(err, null);
+                        } else if (_.isEmpty(found1)) {
+                            callback1("noDataound", null);
+                        } else {
+                            console.log("found*************", found1);
+                        }
+                    });
+
+                });
+                callback1(null, "points updated successfully");
+            }
+        });
 
     }
-}
+
+};
 module.exports = _.assign(module.exports, exports, model);
