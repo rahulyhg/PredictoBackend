@@ -342,6 +342,56 @@ var model = {
                 callback1(null, "Data updated Successfully");
             }
         });
+    },
+
+     sendOtp: function (mobile, userId, callback) {
+        console.log("inside send otp", mobile, userId)
+        var emailOtp = (Math.random() + "").substring(2, 6);
+        var foundData = {};
+        User.findOneAndUpdate({
+            // _id: userId,
+            mobile: mobile
+        }, {
+            otp: emailOtp
+        }).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback("noDataound", null);
+            } else {
+                callback(null, found);
+            
+
+            }
+
+        });
+    }, verifyOTPForResetPass: function (otp, _id, callback) {
+        console.log("*********************", otp)
+        User.findOne({
+            otp: otp
+        }).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback("noDatafound", null);
+            } else {
+                
+                dataToSave={}
+                dataToSave.otp=''
+                 dataToSave._id=found._id
+                 console.log("************************",dataToSave)
+                User.saveData(dataToSave, function (err, created) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(created)) {
+                        callback(null, "noDatafound");
+                    } else {
+                        callback(null, found);
+                    }
+                });
+            }
+        });
     }
+
 };
 module.exports = _.assign(module.exports, exports, model);

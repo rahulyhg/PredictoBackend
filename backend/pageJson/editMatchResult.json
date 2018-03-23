@@ -26,7 +26,7 @@
         "dropDownField": "",
         "dropDownType": "single",
         "onView": true,
-        "dropDown": ["team1", "team2", "tie"]
+        "dropDown": ["team1", "team2", "draw"]
     }, {
         "name": "First Inning Score",
         "type": "tags",

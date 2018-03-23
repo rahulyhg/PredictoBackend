@@ -218,6 +218,29 @@ var controller = {
                 }
             });
         }
+    },
+    sendOtp: function (req, res) {
+        if (req.body) {
+            User.sendOtp(req.body.mobile,req.body.userId, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
+    }, verifyOTPForResetPass: function (req, res) {
+        if (req.body) {
+            User.verifyOTPForResetPass(req.body.otp,req.body._id, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
     }
 
 };
