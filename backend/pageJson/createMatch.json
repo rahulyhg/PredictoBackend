@@ -11,7 +11,6 @@
         "tableRef": "matchNumber",
         "placeholder": "Enter match Number",
         "id": "matchNumber",
-        "validation": ["required", "trim", "unique"],
         "url": ""
     }, {
         "name": "Team1",
@@ -49,51 +48,6 @@
         "tableRef": "startingTime",
         "placeholder": "Enter Start Time",
         "id": "startingTime",
-        "validation": ["required", "trim", "unique"],
-        "url": ""
-    }, {
-        "name": "Winner",
-        "type": "tags",
-        "tableRef": "winner",
-        "placeholder": "select winner",
-        "id": "winner",
-        "url": "",
-        "dropDownField": "",
-        "dropDownType": "single",
-        "onView": true,
-        "dropDown": ["team1", "team2", "tie"]
-    }, {
-        "name": "Toss Winner",
-        "type": "number",
-        "tableRef": "tossWinner",
-        "placeholder": "select toss winner",
-        "id": "tossWinner",
-        "url": ""
-    }, {
-        "name": "First Inning Score",
-        "type": "tags",
-        "tableRef": "firstInningScore",
-        "placeholder": "Enter First Inning score",
-        "id": "firstInningScore",
-        "url": "",
-        "dropDownField": "",
-        "dropDownType": "single",
-        "onView": true,
-        "dropDown": ["100", "200"]
-    }, {
-        "name": "Player",
-        "type": "text",
-        "tableRef": "player",
-        "placeholder": "Enter player name",
-        "id": "player",
-        "validation": ["required", "trim", "unique"],
-        "url": ""
-    }, {
-        "name": "Player Score",
-        "type": "number",
-        "tableRef": "playerScore",
-        "placeholder": "Enter player name",
-        "id": "playerScore",
         "validation": ["required", "trim", "unique"],
         "url": ""
     }],

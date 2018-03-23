@@ -1,8 +1,7 @@
 var schema = new Schema({
     name: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     email: {
         type: String,
@@ -37,6 +36,10 @@ var schema = new Schema({
         }]
     },
     password: {
+        type: String,
+        default: ""
+    },
+    confirmPassword: {
         type: String,
         default: ""
     },
@@ -258,15 +261,20 @@ var model = {
         // } else {
         //     user.lisence = "UDB";
         // }
-        user.save(function (err, created) {
-            if (err) {
-                callback(err, null);
-            } else if (created) {
-                callback(null, created);
-            } else {
-                callback(null, {});
-            }
-        });
+        user.confirmPassword = md5(user.confirmPassword);;
+        if (user.password == user.confirmPassword) {
+            user.save(function (err, created) {
+                if (err) {
+                    callback(err, null);
+                } else if (created) {
+                    callback(null, created);
+                } else {
+                    callback(null, {});
+                }
+            });
+        } else {
+            callback("password not matched");
+        }
     },
     profile: function (data, callback, getGoogle) {
         var str = "name email photo mobile accessLevel";
@@ -308,10 +316,30 @@ var model = {
             if (err) {
                 callback1(err, null);
             } else if (_.isEmpty(found)) {
-                callback1("noDataound", null);
+                callback1("noDataFound", null);
             } else {
                 console.log("found*************", found);
                 callback1(null, found);
+            }
+        });
+    },
+    editUser: function (data, callback1) {
+        User.findOneAndUpdate({
+            "_id": data.id
+        }, {
+            name: data.userName,
+
+            email: data.userEmail
+        }, {
+            multi: true
+        }).exec(function (err, found) {
+            if (err) {
+                callback1(err, null);
+            } else if (_.isEmpty(found)) {
+                callback1("noDataFound", null);
+            } else {
+                console.log("-----------", found)
+                callback1(null, "Data updated Successfully");
             }
         });
     }

@@ -33,6 +33,11 @@ myApp.service('JsonService', function ($http, TemplateService, $state, toastr, $
             TemplateService.changecontent("detail");
           }
           break;
+        case "update":
+          {
+            TemplateService.changecontent("detail");
+          }
+          break;
       }
       callback();
     });
@@ -110,6 +115,15 @@ myApp.service('JsonService', function ($http, TemplateService, $state, toastr, $
               }
             });
           }
+        });
+      } else if (action && action.type == "updateConfirm") {
+        console.log("----------", action, value);
+
+        NavigationService.callApiPoints("UserBets/updatePoints", value, function (data) {
+          console.log("after api called", data);
+        });
+        NavigationService.callApiPoints("UserBets/updateParticipatePoints", value, function (data) {
+          console.log("after api called", data);
         });
       }
     }

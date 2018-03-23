@@ -1,0 +1,46 @@
+{
+    "title": "Match Result",
+    "description": "List of Matches",
+    "pageType": "view",
+    "sendIdWithCreate": true,
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Match No",
+        "isSort": "",
+        "tableRef": "matchNumber"
+    }, {
+        "name": "Team1",
+        "isSort": "",
+        "tableRef": "team1.teamName"
+
+    }, {
+        "name": "Team2",
+        "isSort": "",
+        "tableRef": "team2.teamName"
+    }, {
+        "name": "Starting Time",
+        "isSort": "",
+        "tableRef": "startingTime"
+    }],
+    "action": [{
+            "name": "edit",
+            "icon": "fa-pencil",
+            "buttonClass": "btn-primary",
+            "type": "page",
+            "action": "editMatchResult",
+            "fieldsToSend": {
+                "_id": "_id"
+            }
+        },
+        {
+            "name": "update",
+            "type": "updateConfirm"
+
+        }
+    ],
+
+    "apiCall": {
+        "url": "Match/search",
+        "params": "_id"
+    }
+}

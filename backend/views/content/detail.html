@@ -37,6 +37,9 @@
                                 <div class="col-md-12" ng-if="json.json.pageType == 'edit' && data._id">
                                     <detail-field type="field" form="detailForm" value="item" ng-repeat="field in json.json.fields" data="data"></detail-field>
                                 </div>
+                                <div class="col-md-12" ng-if="json.json.pageType == 'update' && data._id">
+                                    <detail-field type="field" form="detailForm" value="item" ng-repeat="field in json.json.fields" data="data"></detail-field>
+                                </div>
                             </div>
                             <div class="text-center mt20 odd-even-button">
                                 <button class="btn btn-default" type="submit" ng-click="saveData(data)" ng-disabled="detailForm.$invalid">Save</button>

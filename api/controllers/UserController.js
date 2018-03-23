@@ -206,6 +206,18 @@ var controller = {
                 }
             });
         }
+    },
+    editUser: function (req, res) {
+        if (req.body) {
+            User.editUser(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
     }
 
 };

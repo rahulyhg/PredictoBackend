@@ -18,6 +18,11 @@ myApp.factory('NavigationService', function ($http) {
             sref: "#!/page/viewMatch//",
             icon: "phone"
         }, {
+            name: "Match Result",
+            classis: "active",
+            sref: "#!/page/viewMatchResult//",
+            icon: "phone"
+        }, {
             name: "Team",
             classis: "active",
             sref: "#!/page/viewTeam//",
@@ -107,7 +112,12 @@ myApp.factory('NavigationService', function ($http) {
                 callback(data, i);
             });
         },
+        callApiPoints: function (url, data, callback) {
+            $http.post(adminurl + url, data).then(function (data) {
 
+                callback(data);
+            });
+        },
         getOneCountry: function (id, callback) {
             $http.post(adminurl + 'country/getOne', {
                 _id: id

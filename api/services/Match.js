@@ -1,6 +1,7 @@
 var schema = new Schema({
     matchNumber: {
-        type: Number
+        type: Number,
+        unique: true
     },
     team1: {
 
@@ -22,7 +23,7 @@ var schema = new Schema({
         enum: ['team1', 'team2', 'tie']
     },
     tossWinner: {
-        type: Number
+        enum: ['team1', 'team2', 'draw']
     },
     firstInningScore: {
         type: Number
@@ -50,7 +51,14 @@ module.exports = mongoose.model('Match', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "team1 team2", "team1 team2", "order", "asc"));
 var model = {
     allMatches: function (data, callback1) {
-        Match.find().deepPopulate('team1 team2').sort('startingTime').exec(function (err, found) {
+        var today = new Date();
+        today.setDate(today.getDate());
+        console.log(today)
+        Match.find({
+            startingTime: {
+                $gte: today
+            }
+        }).deepPopulate('team1 team2').sort('startingTime').exec(function (err, found) {
             // console.log("FFFFFFFFFFFFFFFf", found)
             if (err) {
                 callback1(err, null);

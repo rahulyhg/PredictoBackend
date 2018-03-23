@@ -66,10 +66,10 @@ var model = {
             } else if (_.isEmpty(found)) {
                 callback1("noDataound", null);
             } else {
-                //console.log("data", found);
-                //callback1(null, found);
+                console.log("data", found);
+                callback1(null, found);
                 async.forEach(found, function (item, index, arr) {
-                    if (item.betType.betName == 'Toss Winner' && ((item.match.tossWinner == '2' && item.answer == 2) || (item.match.tossWinner == '1' && item.answer == 1))) {
+                    if (item.betType.betName == 'Toss Winner' && ((item.match.tossWinner == 'team2' && item.answer == 2) || (item.match.tossWinner == 'team1' && item.answer == 1))) {
                         User.update({
                             _id: item.user._id
                         }, {
@@ -117,8 +117,9 @@ var model = {
 
     },
     updateParticipatePoints: function (data, callback1) {
+        console.log("data----", data._id, "-------------------");
         UserBets.find({
-            match: data.id
+            match: data._id
         }).deepPopulate('match betType user').exec(function (err, found) {
             if (err) {
                 callback1(err, null);
