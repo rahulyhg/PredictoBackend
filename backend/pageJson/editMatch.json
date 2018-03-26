@@ -56,6 +56,48 @@
         "placeholder": "Enter player name",
         "id": "player",
         "url": ""
+     },{
+        "name": "Winner",
+        "type": "tags",
+        "tableRef": "winner",
+        "placeholder": "select winner",
+        "id": "winner",
+        "url": "",
+        "dropDownField": "",
+        "dropDownType": "single",
+        "onView": true,
+        "dropDown": ["team1", "team2", "draw"]
+    }, {
+        "name": "Toss Winner",
+        "type": "tags",
+        "tableRef": "tossWinner",
+        "placeholder": "select toss winner",
+        "id": "tossWinner",
+        "url": "",
+        "dropDownField": "",
+        "dropDownType": "single",
+        "onView": true,
+        "dropDown": ["team1", "team2", "draw"]
+    }, {
+        "name": "First Inning Score",
+        "type": "number",
+        "tableRef": "firstInningScore",
+        "placeholder": "Enter First Inning score",
+        "id": "firstInningScore"
+    }, {
+        "name": "Player",
+        "type": "text",
+        "tableRef": "player",
+        "placeholder": "Enter player name",
+        "id": "player",
+        "url": ""
+    }, {
+        "name": "Player Score",
+        "type": "number",
+        "tableRef": "playerScore",
+        "placeholder": "Enter player name",
+        "id": "playerScore",
+        "url": ""
     }],
     "action": [{
         "name": "submit",

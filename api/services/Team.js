@@ -11,6 +11,9 @@ var schema = new Schema({
     shortName: {
         type: String,
         required: true
+    },
+    rank:{
+        type:Number
     }
 });
 
@@ -34,5 +37,6 @@ var model = {
             }
         });
     }
+    
 };
 module.exports = _.assign(module.exports, exports, model);

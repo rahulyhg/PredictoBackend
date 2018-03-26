@@ -24,7 +24,12 @@
         "name": "Answer",
         "isSort": "",
         "tableRef": "answer"
-    }],
+    },{
+        "name": "Points",
+        "isSort": "",
+        "tableRef": "pointsEarned"
+    }
+    ],
     "action": [{
         "name": "edit",
         "icon": "fa-pencil",

@@ -11,11 +11,7 @@ var schema = new Schema({
     },
     winPoints: {
         type: Number
-    },
-    options: [{
-        type: Number,
-        enum: []
-    }]
+    }
 });
 
 schema.plugin(deepPopulate, {});

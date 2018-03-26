@@ -21,6 +21,13 @@ var schema = new Schema({
     },
     answer: {
         type: Number
+    },
+    answerTeam: {
+        type: String,
+        enum: ['team1', 'team2', 'draw']
+    },
+    pointsEarned: {
+        type: Number
     }
 });
 
@@ -57,67 +64,46 @@ var model = {
             }
         });
     },
-    updatePoints: function (data, callback1) {
-        UserBets.find({
-            match: data.id
-        }).deepPopulate('match betType user').exec(function (err, found) {
-            if (err) {
-                callback1(err, null);
-            } else if (_.isEmpty(found)) {
-                callback1("noDataound", null);
-            } else {
-                console.log("data", found);
-                callback1(null, found);
-                async.forEach(found, function (item, index, arr) {
-                    if (item.betType.betName == 'Toss Winner' && ((item.match.tossWinner == 'team2' && item.answer == 2) || (item.match.tossWinner == 'team1' && item.answer == 1))) {
-                        User.update({
-                            _id: item.user._id
-                        }, {
-                            $inc: {
-                                points: item.betType.winPoints
-                            }
-                        }).exec(function (err, found1) {
-                            // console.log("FFFFFFFFFFFFFFFf", found)
-                            if (err) {
-                                callback1(err, null);
-                            } else if (_.isEmpty(found1)) {
-                                callback1("noDataound", null);
-                            } else {
-                                console.log("found*************", found1);
-                                //callback1(null, found1);
-                            }
-                        });
+    addPoints: function (data, callback1) {
+        var update = function (data) {
+            UserBets.update({
+                _id: data._id
+            }, {
+                    $inc: {
+                        pointsEarned: data.betType.winPoints
                     }
-                    if (item.betType.betName == 'Winner' && ((item.match.winner == 'team1' && item.answer == 1) || (item.match.winner == 'team2' && item.answer == 2) || ((item.match.winner == 'tie' && item.answer == 3)))) {
-                        User.update({
-                            _id: item.user._id
-                        }, {
-                            $inc: {
-                                points: item.betType.winPoints
-                            }
-                        }).exec(function (err, found1) {
-                            // console.log("FFFFFFFFFFFFFFFf", found)
-                            if (err) {
-                                callback1(err, null);
-                            } else if (_.isEmpty(found1)) {
-                                callback1("noDataound", null);
-                            } else {
-                                console.log("found*************", found1);
-                                //callback1(null, found1);
-                            }
-                        });
-                    }
+                }).exec(function (err, found1) {
+                    // console.log("FFFFFFFFFFFFFFFf", found1)
+                    if (err) {
 
+                    } else if (_.isEmpty(found1)) {
+
+                    } else {
+                        // console.log("found*************", found1);
+
+                    }
                 });
+        }
+        var updateParticipationPoints = function (data) {
 
-            }
+            UserBets.update({
+                _id: data._id
+            }, {
+                    $inc: {
+                        pointsEarned: data.betType.participationPoints
+                    }
+                }).exec(function (err, found1) {
+                    // console.log("FFFFFFFFFFFFFFFf", found1)
+                    if (err) {
 
-            callback1(null, "points updated successfully");
-        });
+                    } else if (_.isEmpty(found1)) {
 
-    },
-    updateParticipatePoints: function (data, callback1) {
-        console.log("data----", data._id, "-------------------");
+                    } else {
+                        //     console.log("found*************", found1);
+
+                    }
+                });
+        }
         UserBets.find({
             match: data._id
         }).deepPopulate('match betType user').exec(function (err, found) {
@@ -126,30 +112,166 @@ var model = {
             } else if (_.isEmpty(found)) {
                 callback1("noDataound", null);
             } else {
+                // console.log("data", found);
+                // callback1(null, found);
                 async.forEach(found, function (item, index, arr) {
-                    User.update({
-                        _id: item.user._id
-                    }, {
-                        $inc: {
-                            points: item.betType.participationPoints
-                        }
-                    }).exec(function (err, found1) {
-                        // console.log("FFFFFFFFFFFFFFFf", found)
-                        if (err) {
-                            callback1(err, null);
-                        } else if (_.isEmpty(found1)) {
-                            callback1("noDataound", null);
+                    //console.log("data", item);
+                    if (item.betType.betName == 'tossWinner') {
+                        if (item.match.tossWinner == item.answerTeam) {
+                            update(item)
                         } else {
-                            console.log("found*************", found1);
+                            updateParticipationPoints(item)
                         }
-                    });
+                    }
+                    if (item.betType.betName == 'Winner') {
+                        if (item.match.winner == item.answerTeam) {
+                            update(item)
+                        } else {
+                            updateParticipationPoints(item)
+                        }
+                    }
 
+                    if (item.betType.betName == 'IstInningScore') {
+                        console.log("---in 1st inning---")
+                        if (item.match.firstInningScore == item.answer) {
+                            console.log("---in if---")
+                            update(item)
+                        } else if (Math.abs(item.match.firstInningScore - item.answer) <= 5) {
+                            console.log("---in if else---", Math.abs(item.match.firstInningScore - item.answer))
+                            UserBets.update({
+                                _id: item._id
+                            }, {
+                                    $inc: {
+                                        pointsEarned: 200
+                                    }
+                                }).exec(function (err, found1) {
+                                    // console.log("FFFFFFFFFFFFFFFf", found1)
+                                    if (err) {
+
+                                    } else if (_.isEmpty(found1)) {
+
+                                    } else {
+                                        // console.log("found*************", found1);
+
+                                    }
+                                });
+                        }
+                        else if (Math.abs(item.match.firstInningScore - item.answer) <= 20) {
+                            console.log("---in if else---", Math.abs(item.match.firstInningScore - item.answer))
+                            UserBets.update({
+                                _id: item._id
+                            }, {
+                                    $inc: {
+                                        pointsEarned: 100
+                                    }
+                                }).exec(function (err, found1) {
+                                    // console.log("FFFFFFFFFFFFFFFf", found1)
+                                    if (err) {
+
+                                    } else if (_.isEmpty(found1)) {
+
+                                    } else {
+                                        // console.log("found*************", found1);
+
+                                    }
+                                });
+                        }
+                        else {
+                            console.log("---in else---")
+                            UserBets.update({
+                                _id: item._id
+                            }, {
+                                    $inc: {
+                                        pointsEarned: 20
+                                    }
+                                }).exec(function (err, found1) {
+                                    // console.log("FFFFFFFFFFFFFFFf", found1)
+                                    if (err) {
+
+                                    } else if (_.isEmpty(found1)) {
+
+                                    } else {
+                                        // console.log("found*************", found1);
+
+                                    }
+                                });
+                        }
+                    }
+
+                    if (item.betType.betName == 'playerScore') {
+                        console.log("---in 1st inning---")
+                        if (item.match.playerScore == item.answer) {
+                            console.log("---in if---")
+                            update(item)
+                        } else if (Math.abs(item.match.playerScore - item.answer) <= 5) {
+                            console.log("---in if else---", Math.abs(item.match.playerScore - item.answer))
+                            UserBets.update({
+                                _id: item._id
+                            }, {
+                                    $inc: {
+                                        pointsEarned: 100
+                                    }
+                                }).exec(function (err, found1) {
+                                    // console.log("FFFFFFFFFFFFFFFf", found1)
+                                    if (err) {
+
+                                    } else if (_.isEmpty(found1)) {
+
+                                    } else {
+                                        // console.log("found*************", found1);
+
+                                    }
+                                });
+                        }
+
+                        else {
+                            console.log("---in else---")
+                            UserBets.update({
+                                _id: item._id
+                            }, {
+                                    $inc: {
+                                        pointsEarned: 20
+                                    }
+                                }).exec(function (err, found1) {
+                                    // console.log("FFFFFFFFFFFFFFFf", found1)
+                                    if (err) {
+
+                                    } else if (_.isEmpty(found1)) {
+
+                                    } else {
+                                        // console.log("found*************", found1);
+
+                                    }
+                                });
+                        }
+                    }
                 });
-                callback1(null, "points updated successfully");
+
             }
+
+            callback1(null, "points updated successfully");
         });
 
+
+
+
+    },
+    tournamentWinner:function(data,callback1){
+        UserBets.find({
+            betType:'tournamentWinner'
+        }).exec(function (err, found) {
+            // console.log("FFFFFFFFFFFFFFFf", found)
+            if (err) {
+                callback1(err, null);
+            } else if (_.isEmpty(found)) {
+                callback1("noDataound", null);
+            } else {
+                console.log("found*************", found);
+                callback1(null, found);
+            }
+        });
     }
+
 
 };
 module.exports = _.assign(module.exports, exports, model);

@@ -68,8 +68,19 @@
             "tableRef": "answer",
             "placeholder": "Enter Answer",
             "id": "answer",
-            "validation": ["required", "trim", "unique"],
             "url": ""
+        },
+        {
+            "name": "Answer",
+            "type": "tags",
+            "tableRef": "answerTeam",
+            "placeholder": "Enter Answer",
+            "id": "answerTeam",
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["team1","team2","draw"]
         }
     ],
     "action": [{

@@ -19,7 +19,7 @@
         "tableRef": "description",
         "placeholder": "Enter descrption",
         "id": "description",
-        "validation": ["required", "trim", "unique"],
+       
         "url": ""
     }, {
         "name": "Participation Points",
@@ -27,7 +27,7 @@
         "tableRef": "participationPoints",
         "placeholder": "Enter points",
         "id": "participationPoints",
-        "validation": ["required", "trim", "unique"],
+       
         "url": ""
     }, {
         "name": "Win Points",
@@ -35,19 +35,8 @@
         "tableRef": "winPoints",
         "placeholder": "Enter win points",
         "id": "winPoints",
-        "validation": ["required", "trim", "unique"],
+       
         "url": ""
-    }, {
-        "name": "Options",
-        "type": "tags",
-        "tableRef": "options",
-        "placeholder": "select winner",
-        "id": "options",
-        "url": "",
-        "dropDownField": "",
-        "dropDownType": "single",
-        "onView": true,
-        "dropDown": [""]
     }],
     "action": [{
         "name": "submit",

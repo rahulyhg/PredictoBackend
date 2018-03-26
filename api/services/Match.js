@@ -23,10 +23,11 @@ var schema = new Schema({
         enum: ['team1', 'team2', 'tie']
     },
     tossWinner: {
+        type: String,
         enum: ['team1', 'team2', 'draw']
     },
     firstInningScore: {
-        type: Number
+       type: Number
     },
     player: {
         type: String
