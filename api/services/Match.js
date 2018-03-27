@@ -66,10 +66,10 @@ var model = {
             } else if (_.isEmpty(found)) {
                 callback1("noDataound", null);
             } else {
-                console.log("found*************", found);
+                //console.log("found*************", found);
                 callback1(null, found);
             }
         });
-    },
+    }
 };
 module.exports = _.assign(module.exports, exports, model);

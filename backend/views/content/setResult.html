@@ -1,0 +1,88 @@
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-12 column">
+            <div class="heading-profile">
+                <h2>Match Details</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<form name="productForm" ng-submit="saveProduct(formdata)">
+    <div class="widget">
+        <div class="form-elements-sec">
+            <div class="sec">
+                <div class="form-group" fields>
+                    <label>Match No:</label>
+                    <label>{{data.matchNumber}}</label>
+                </div>
+                <div class="form-group" fields>
+                    <label> {{data.team1.teamName}}  </label> <label> VS </label> <label>  {{data.team2.teamName}}</label>
+                </div>
+               
+                <table class="table">
+
+                    <tr>
+                    <td>
+                         <label>Team1</label>
+                    </td>
+                    <td>VS</td>
+                    <td>
+                        <label> Team2<label>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>
+                         <label>{{data.team1.teamName}}</label>
+                    </td><td>VS</td>
+                    <td>
+                        <label> {{data.team2.teamName}}<label>
+                    </td>
+                    </tr>
+                       </table>
+                       <hr><hr>
+                          <table class="table">
+                    <tr>
+                     <td>
+                         <label>Select Winner</label>
+                    </td>
+                    <td>
+                        <select ng-model="data.winner">
+                                <option value="team1">team1</option>
+                                <option value="team2">team2</option>
+                                <option value="draw">draw</option>
+                        </select>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td>
+                         <label>Toss Winner</label>
+                    </td>
+                    <td>
+                        <select ng-model="data.tossWinner">
+                                <option value="team1">team1</option>
+                                <option value="team2">team2</option>
+                                <option value="draw">draw</option>
+                        </select>
+                    </td>
+                    </tr>
+                    <tr>
+                       <td>
+                         <label>1st Inning Score</label>
+                    </td> 
+                    <td><input type="number" ng-model="data.firstInningScore" name="firstInningScore"></td>
+                    </tr>
+                    <tr>
+                       <td>
+                         <label>Player Score</label>
+                    </td> 
+                    <td><input type="number" ng-model="data.playerScore" name="playerScore"></td>
+                    </tr>
+                    </table>
+                   <button class="button button-block button-positive" ng-click="setMatch(data)" >Save</button>
+                </div>
+
+
+
+            </div>
+        </div>
+</form>

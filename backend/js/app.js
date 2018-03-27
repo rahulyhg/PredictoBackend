@@ -87,6 +87,17 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/jagz",
             templateUrl: "views/jagz.html",
             controller: 'JagzCtrl'
+        })
+
+         .state('matchResult', {
+            url: "/matchResult",
+            templateUrl: "views/template.html",
+            controller: 'MatchResultCtrl'
+        })
+        .state('setResult', {
+            url: "/setResult/:data",
+            templateUrl: "views/template.html",
+            controller: 'SetMatchResultCtrl'
         });
 
     $urlRouterProvider.otherwise("/dashboard");

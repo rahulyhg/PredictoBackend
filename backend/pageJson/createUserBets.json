@@ -14,11 +14,6 @@
             "searchApi": "searchCall",
             "placeholder": "Select User Name ",
             "id": "match",
-            "validation": [
-                "",
-                "trim",
-                ""
-            ],
             "url": "Match/search"
         }, {
             "name": "User",
@@ -29,11 +24,6 @@
             "searchApi": "searchCall",
             "placeholder": "Select User Name ",
             "id": "user",
-            "validation": [
-                "",
-                "trim",
-                ""
-            ],
             "url": "User/search"
         }, {
             "name": "Select Bets",
@@ -44,11 +34,6 @@
             "searchApi": "searchCall",
             "placeholder": "Enter Bet Name ",
             "id": "betType",
-            "validation": [
-                "",
-                "trim",
-                ""
-            ],
             "url": "BetType/search"
         },
         {
@@ -81,8 +66,18 @@
             "dropDownType": "single",
             "onView": true,
             "dropDown": ["team1","team2","draw"]
-        }
-        
+        },
+        {
+        "name": "Tournament Winner",
+        "type": "tags",
+        "tableRef": "answerFinal",
+        "dropDownType": "single",
+        "dropDownField": "teamName",
+        "searchApi": "searchCall",
+        "placeholder": "Select Team ",
+        "id": "answerFinal",
+        "url": "Team/search"
+    }
 
     ],
     "action": [{

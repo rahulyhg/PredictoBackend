@@ -32,6 +32,12 @@ myApp.factory('NavigationService', function ($http) {
             classis: "active",
             sref: "#!/page/viewUserBets//",
             icon: "phone"
+        },
+            {
+            name: "Match Result",
+            classis: "active",
+            uiSref: "matchResult",
+            icon: "phone"
         }
     ];
 
@@ -107,12 +113,19 @@ myApp.factory('NavigationService', function ($http) {
                 callback(data, i);
             });
         },
-        callApiPoints: function (url, data, callback) {
-            $http.post(adminurl + url, data).then(function (data) {
+        callApiWithData: function (url, data, callback) {
+        $http.post(adminurl + url, data).then(function (data) {
 
-                callback(data);
-            });
-        },
+          callback(data);
+        });
+      },
+      callApiWithoutData: function (url, callback) {
+        $http.post(adminurl + url).then(function (data) {
+
+          callback(data);
+        });
+      
+    },
         getOneCountry: function (id, callback) {
             $http.post(adminurl + 'country/getOne', {
                 _id: id

@@ -81,6 +81,29 @@
             "dropDownType": "single",
             "onView": true,
             "dropDown": ["team1","team2","draw"]
+        },
+          {
+        "name": "Tournament Winner",
+        "type": "tags",
+        "tableRef": "answerFinal",
+        "dropDownType": "single",
+        "dropDownField": "teamName",
+        "searchApi": "searchCall",
+        "placeholder": "Select Team ",
+        "id": "answerFinal",
+        "validation": [
+            "",
+            "trim",
+            ""
+        ],
+        "url": "Team/search"
+    },{
+            "name": "Points",
+            "type": "number",
+            "tableRef": "pointsEarned",
+            "placeholder": "Enter Points",
+            "id": "pointsEarned",
+            "url": ""
         }
     ],
     "action": [{

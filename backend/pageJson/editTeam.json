@@ -32,6 +32,14 @@
         "id": "shortName",
         "validation": ["", "trim", "unique"],
         "url": ""
+    },{
+        "name": "Rank",
+        "type": "number",
+        "tableRef": "rank",
+        "placeholder": "Enter rank",
+        "id": "rank",
+        "validation": ["", "trim", "unique"],
+        "url": ""
     }],
     "action": [{
         "name": "submit",

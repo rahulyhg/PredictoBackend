@@ -1,11 +1,11 @@
 var globalfunction = {};
 myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
-        //Used to name the .html file
-        $scope.template = TemplateService.changecontent("dashboard");
-        $scope.menutitle = NavigationService.makeactive("Dashboard");
-        TemplateService.title = $scope.menutitle;
-        $scope.navigation = NavigationService.getnav();
-    })
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("dashboard");
+    $scope.menutitle = NavigationService.makeactive("Dashboard");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
 
     .controller('AccessController', function ($scope, TemplateService, NavigationService, $timeout, $state) {
         // if ($.jStorage.get("accessToken")) {
@@ -231,7 +231,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         $scope.menutitle = NavigationService.makeactive("Country List");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
-        JsonService.getJson($stateParams.id, function () {});
+        JsonService.getJson($stateParams.id, function () { });
 
         globalfunction.confDel = function (callback) {
             var modalInstance = $uibModal.open({
@@ -309,9 +309,9 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
                 $scope.currentPage = 1;
             }
             NavigationService.search($scope.json.json.apiCall.url, {
-                    page: $scope.currentPage,
-                    keyword: $scope.search.keyword
-                }, ++i,
+                page: $scope.currentPage,
+                keyword: $scope.search.keyword
+            }, ++i,
                 function (data, ini) {
                     if (ini == i) {
                         $scope.items = data.data.results;
@@ -966,6 +966,117 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
                 }
             });
         };
+
+    })
+    .controller('MatchResultCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $http) {
+        $scope.template = TemplateService.changecontent("matchResult");
+        $scope.menutitle = NavigationService.makeactive("matchResult");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+                $scope.changeInput = function () {
+            if ($scope.formData.input != '') {
+                $scope.formData.input = '';
+            } else {
+                $scope.formData.input = $scope.formData.input;
+            }
+        };
+        $scope.changeAll = function () {
+            $scope.formData = {};
+            $scope.formData.page = 1;
+            $scope.formData.type = '';
+            $scope.formData.keyword = '';
+            $scope.viewTable();
+        };
+        $scope.formData = {};
+        $scope.formData.page = 1;
+        $scope.formData.type = '';
+        $scope.formData.keyword = '';
+        // $scope.selectedStatus = 'All';
+        $scope.searchInTable = function (data) {
+            $scope.formData.page = 1;
+            if (data.length >= 2) {
+                $scope.formData.keyword = data;
+                $scope.viewTable();
+            } else if (data.length == '') {
+                $scope.formData.keyword = data;
+                $scope.viewTable();
+            }
+        }
+        $scope.viewTable = function () {
+            $scope.url = "Match/search";
+            $scope.formData.page = $scope.formData.page++;
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                console.log("data.value", data);
+                if (data.value) {
+                    $scope.items = data.data.results;
+                    console.log(" $scope.items", $scope.items);
+                }
+                 console.log(" data.data.total  data.data.options.count", data.data.total,data.data.options.count);
+                $scope.totalItems = data.data.total;
+                $scope.maxRow = data.data.options.count;
+            });
+        }
+        //     $scope.viewTable = function () {
+        //     $scope.url = "Match/allMatches";
+        //     $scope.formData.page = $scope.formData.page++;
+        //     NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+        //         console.log("data.value", data.value);
+        //         if (data.value) {
+        //             $scope.items = data.data;
+        //             console.log(" $scope.items", data);
+        //         }
+        //          console.log(" $scope.totalItems", data.data.length);
+        //         $scope.totalItems = data.data.length;
+        //         $scope.maxRow = Math.round(data.data.length/10);
+        //         console.log(" $scope.totalItems",$scope.maxRow);
+        //     });
+        // }
+        $scope.viewTable();
+        // NavigationService.callApiWithoutData("Match/allMatches", function (data) {
+        //     console.log("after api called", data);
+        //     $scope.items = data.data.data;
+
+        // });
+        $scope.setResult = function (data) {
+            console.log("button pressed", data);
+            NavigationService.callApiWithData("Match/getone", { _id: data }, function (data) {
+                console.log("after api called", data.data.data._id);
+                if (data.data.value == true) {
+                    $state.go("setResult", {
+                        data: data.data.data._id
+                    });
+                }
+            });
+
+        }
+    })
+
+    .controller('SetMatchResultCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $http) {
+        $scope.template = TemplateService.changecontent("setResult");
+        $scope.menutitle = NavigationService.makeactive("setResult");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        data = $state.params.data;
+        console.log("id", data);
+        NavigationService.callApiWithData("Match/getone", { _id: data }, function (editData) {
+            console.log("after api called", editData.data.data);
+            $scope.data = editData.data.data
+        });
+        $scope.setMatch = function (data) {
+            console.log("-------",data)
+            NavigationService.callApiWithData("Match/save",data,function(savedata){
+                console.log("after api called", savedata.data.value);
+              if(savedata.data.value==true){
+                  
+                   NavigationService.callApiWithData("UserBets/addPoints",data,function(points){
+                        console.log("-----",points.data.value)
+                        if(points.data.value){
+                            $state.go("matchResult")
+                        }
+                   })
+              }
+            })
+        }
 
     })
 
