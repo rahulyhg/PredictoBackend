@@ -27,9 +27,7 @@ var schema = new Schema({
         enum: ['team1', 'team2', 'draw']
     },
     answerFinal: {
-        type: Schema.Types.ObjectId,
-        ref: 'Team',
-        index: true
+        type:String
     },
     pointsEarned: {
         type: Number
@@ -74,46 +72,46 @@ var model = {
     },
     addPoints: function (data, callback1) {
 //    update user function
-         var updateUser=function(data){
-             console.log("aaaaaaaaaaaaaaaa",data.user._id)
-              User.update({
-                _id: data.user._id
-            }, {
-                    $inc: {
-                        points: data.betType.winPoints
-                    }
-                }).exec(function (err, found1) {
-                    // console.log("FFFFFFFFFFFFFFFf", found1)
-                    if (err) {
+        //  var updateUser=function(data){
+        //      console.log("aaaaaaaaaaaaaaaa",data.user._id)
+        //       User.update({
+        //         _id: data.user._id
+        //     }, {
+        //             $inc: {
+        //                 points: data.betType.winPoints
+        //             }
+        //         }).exec(function (err, found1) {
+        //             // console.log("FFFFFFFFFFFFFFFf", found1)
+        //             if (err) {
 
-                    } else if (_.isEmpty(found1)) {
+        //             } else if (_.isEmpty(found1)) {
 
-                    } else {
-                        // console.log("found*************", found1);
+        //             } else {
+        //                 // console.log("found*************", found1);
 
-                    }
-                });
-         }
-         var updateUserParticipationPoints=function(data){
-             console.log("aaaaaaaaaaaaaaaa",data.user._id)
-              User.update({
-                _id: data.user._id
-            }, {
-                    $inc: {
-                        points: data.betType.participationPoints
-                    }
-                }).exec(function (err, found1) {
-                    // console.log("FFFFFFFFFFFFFFFf", found1)
-                    if (err) {
+        //             }
+        //         });
+        //  }
+        //  var updateUserParticipationPoints=function(data){
+        //      console.log("aaaaaaaaaaaaaaaa",data.user._id)
+        //       User.update({
+        //         _id: data.user._id
+        //     }, {
+        //             $inc: {
+        //                 points: data.betType.participationPoints
+        //             }
+        //         }).exec(function (err, found1) {
+        //             // console.log("FFFFFFFFFFFFFFFf", found1)
+        //             if (err) {
 
-                    } else if (_.isEmpty(found1)) {
+        //             } else if (_.isEmpty(found1)) {
 
-                    } else {
-                        // console.log("found*************", found1);
+        //             } else {
+        //                 // console.log("found*************", found1);
 
-                    }
-                });
-         }
+        //             }
+        //         });
+        //  }
 
 
          //    update userbets function
@@ -177,20 +175,20 @@ var model = {
                     if (item.betType.betName == 'tossWinner') {
                         if (item.match.tossWinner == item.answerTeam) {
                             update(item)
-                            updateUser(item)
+                            //updateUser(item)
                         } else {
                             updateParticipationPoints(item)
-                            updateUserParticipationPoints(item)
+                           // updateUserParticipationPoints(item)
                         }
                     }
                     // update points for winner
                     if (item.betType.betName == 'Winner') {
                         if (item.match.winner == item.answerTeam) {
                             update(item)
-                             updateUser(item)
+                            // updateUser(item)
                         } else {
                             updateParticipationPoints(item)
-                            updateUserParticipationPoints(item)
+                           // updateUserParticipationPoints(item)
                         }
                     }
                     // update points for IstInningScore
@@ -199,7 +197,7 @@ var model = {
                         if (item.match.firstInningScore == item.answer) {
                             console.log("---in if---")
                             update(item)
-                             updateUser(item)
+                            // updateUser(item)
                         } else if (Math.abs(item.match.firstInningScore - item.answer) <= 5) {
                             console.log("---in if else---", Math.abs(item.match.firstInningScore - item.answer))
                        
@@ -225,23 +223,23 @@ var model = {
 
                                  //    user update points
 
-                                   User.update({
-                                _id: item.user._id
-                            }, {
-                                    $inc: {
-                                        points: 200
-                                    }
-                                }).exec(function (err, found1) {
-                                    // console.log("FFFFFFFFFFFFFFFf", found1)
-                                    if (err) {
+                            //        User.update({
+                            //     _id: item.user._id
+                            // }, {
+                            //         $inc: {
+                            //             points: 200
+                            //         }
+                            //     }).exec(function (err, found1) {
+                            //         // console.log("FFFFFFFFFFFFFFFf", found1)
+                            //         if (err) {
 
-                                    } else if (_.isEmpty(found1)) {
+                            //         } else if (_.isEmpty(found1)) {
 
-                                    } else {
-                                        // console.log("found*************", found1);
+                            //         } else {
+                            //             // console.log("found*************", found1);
 
-                                    }
-                                });
+                            //         }
+                            //     });
                         }
                         else if (Math.abs(item.match.firstInningScore - item.answer) <= 20) {
                             console.log("---in if else---", Math.abs(item.match.firstInningScore - item.answer))
@@ -268,23 +266,23 @@ var model = {
 
                                  //    user update points
 
-                                 User.update({
-                                _id: item.user._id
-                            }, {
-                                    $inc: {
-                                        points: 100
-                                    }
-                                }).exec(function (err, found1) {
-                                    // console.log("FFFFFFFFFFFFFFFf", found1)
-                                    if (err) {
+                            //      User.update({
+                            //     _id: item.user._id
+                            // }, {
+                            //         $inc: {
+                            //             points: 100
+                            //         }
+                            //     }).exec(function (err, found1) {
+                            //         // console.log("FFFFFFFFFFFFFFFf", found1)
+                            //         if (err) {
 
-                                    } else if (_.isEmpty(found1)) {
+                            //         } else if (_.isEmpty(found1)) {
 
-                                    } else {
-                                        // console.log("found*************", found1);
+                            //         } else {
+                            //             // console.log("found*************", found1);
 
-                                    }
-                                });
+                            //         }
+                            //     });
                         }
                         else {
                             console.log("---in else---")
@@ -311,23 +309,23 @@ var model = {
 
                                  //    user update points
 
-                                   User.update({
-                                _id: item.user._id
-                            }, {
-                                    $inc: {
-                                        points: 20
-                                    }
-                                }).exec(function (err, found1) {
-                                    // console.log("FFFFFFFFFFFFFFFf", found1)
-                                    if (err) {
+                            //        User.update({
+                            //     _id: item.user._id
+                            // }, {
+                            //         $inc: {
+                            //             points: 20
+                            //         }
+                            //     }).exec(function (err, found1) {
+                            //         // console.log("FFFFFFFFFFFFFFFf", found1)
+                            //         if (err) {
 
-                                    } else if (_.isEmpty(found1)) {
+                            //         } else if (_.isEmpty(found1)) {
 
-                                    } else {
-                                        // console.log("found*************", found1);
+                            //         } else {
+                            //             // console.log("found*************", found1);
 
-                                    }
-                                });
+                            //         }
+                            //     });
                         }
                     }
 
@@ -338,7 +336,7 @@ var model = {
                         if (item.match.playerScore == item.answer) {
                             console.log("---in if---")
                             update(item)
-                             updateUser(item)
+                           //  updateUser(item)
                         } else if (Math.abs(item.match.playerScore - item.answer) <= 5) {
                             console.log("---in if else---", Math.abs(item.match.playerScore - item.answer))
                            
@@ -364,23 +362,23 @@ var model = {
 
                                  //    user update points
 
-                                       User.update({
-                                _id: item.user._id
-                            }, {
-                                    $inc: {
-                                        points: 100
-                                    }
-                                }).exec(function (err, found1) {
-                                    // console.log("FFFFFFFFFFFFFFFf", found1)
-                                    if (err) {
+                            //            User.update({
+                            //     _id: item.user._id
+                            // }, {
+                            //         $inc: {
+                            //             points: 100
+                            //         }
+                            //     }).exec(function (err, found1) {
+                            //         // console.log("FFFFFFFFFFFFFFFf", found1)
+                            //         if (err) {
 
-                                    } else if (_.isEmpty(found1)) {
+                            //         } else if (_.isEmpty(found1)) {
 
-                                    } else {
-                                        // console.log("found*************", found1);
+                            //         } else {
+                            //             // console.log("found*************", found1);
 
-                                    }
-                                });
+                            //         }
+                            //     });
                         }
 
                         else {
@@ -408,23 +406,23 @@ var model = {
 
                                  //    user update points
 
-                                User.update({
-                                _id: item.user._id
-                            }, {
-                                    $inc: {
-                                        points: 20
-                                    }
-                                }).exec(function (err, found1) {
-                                    // console.log("FFFFFFFFFFFFFFFf", found1)
-                                    if (err) {
+                            //     User.update({
+                            //     _id: item.user._id
+                            // }, {
+                            //         $inc: {
+                            //             points: 20
+                            //         }
+                            //     }).exec(function (err, found1) {
+                            //         // console.log("FFFFFFFFFFFFFFFf", found1)
+                            //         if (err) {
 
-                                    } else if (_.isEmpty(found1)) {
+                            //         } else if (_.isEmpty(found1)) {
 
-                                    } else {
-                                        // console.log("found*************", found1);
+                            //         } else {
+                            //             // console.log("found*************", found1);
 
-                                    }
-                                });
+                            //         }
+                            //     });
                         }
                     }
 
@@ -487,23 +485,23 @@ var model = {
 
                                     // update user points
 
-                                      User.update({
-                                    _id: item.user._id
-                                }, {
-                                        $inc: {
-                                            points: item.betType.winPoints
-                                        }
-                                    }).exec(function (err, found1) {
-                                        // console.log("FFFFFFFFFFFFFFFf", found1)
-                                        if (err) {
+                                //       User.update({
+                                //     _id: item.user._id
+                                // }, {
+                                //         $inc: {
+                                //             points: item.betType.winPoints
+                                //         }
+                                //     }).exec(function (err, found1) {
+                                //         // console.log("FFFFFFFFFFFFFFFf", found1)
+                                //         if (err) {
 
-                                        } else if (_.isEmpty(found1)) {
+                                //         } else if (_.isEmpty(found1)) {
 
-                                        } else {
-                                            console.log("found*************", found1);
+                                //         } else {
+                                //             console.log("found*************", found1);
 
-                                        }
-                                    });
+                                //         }
+                                //     });
                             }
                             else {
                                     partialPoints=5000-(item.answerFinal.rank*600);
@@ -530,23 +528,23 @@ var model = {
 
                                     // update userPoints
 
-                                          User.update({
-                                    _id: item.user._id
-                                }, {
-                                        $inc: {
-                                            points: partialPoints
-                                        }
-                                    }).exec(function (err, found1) {
-                                        // console.log("FFFFFFFFFFFFFFFf", found1)
-                                        if (err) {
+                                //           User.update({
+                                //     _id: item.user._id
+                                // }, {
+                                //         $inc: {
+                                //             points: partialPoints
+                                //         }
+                                //     }).exec(function (err, found1) {
+                                //         // console.log("FFFFFFFFFFFFFFFf", found1)
+                                //         if (err) {
 
-                                        } else if (_.isEmpty(found1)) {
+                                //         } else if (_.isEmpty(found1)) {
 
-                                        } else {
-                                            console.log("found*************", found1);
+                                //         } else {
+                                //             console.log("found*************", found1);
 
-                                        }
-                                    });
+                                //         }
+                                //     });
                             }
                         });
                     }
