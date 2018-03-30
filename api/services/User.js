@@ -35,6 +35,23 @@ var schema = new Schema({
             }
         }]
     },
+     socailLoginPhoto: {
+        type: String,
+        default: "",
+        excel: [{
+            name: "Photo Val"
+        }, {
+            name: "Photo String",
+            modify: function (val, data) {
+                return "http://abc/" + val;
+            }
+        }, {
+            name: "Photo Kebab",
+            modify: function (val, data) {
+                return data.name + " " + moment(data.dob).format("MMM DD YYYY");
+            }
+        }]
+    },
     password: {
         type: String,
         default: ""
@@ -328,8 +345,9 @@ var model = {
             "_id": data.id
         }, {
             name: data.userName,
-
-            email: data.userEmail
+            dob:data.dob,
+            email: data.userEmail,
+            points:data.points
         }, {
             multi: true
         }).exec(function (err, found) {

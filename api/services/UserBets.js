@@ -27,7 +27,9 @@ var schema = new Schema({
         enum: ['team1', 'team2', 'draw']
     },
     answerFinal: {
-        type:String
+        type: Schema.Types.ObjectId,
+        ref: 'Team',
+        index: true
     },
     pointsEarned: {
         type: Number
