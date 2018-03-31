@@ -1016,27 +1016,9 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
                 $scope.maxRow = data.data.options.count;
             });
         }
-        //     $scope.viewTable = function () {
-        //     $scope.url = "Match/allMatches";
-        //     $scope.formData.page = $scope.formData.page++;
-        //     NavigationService.apiCall($scope.url, $scope.formData, function (data) {
-        //         console.log("data.value", data.value);
-        //         if (data.value) {
-        //             $scope.items = data.data;
-        //             console.log(" $scope.items", data);
-        //         }
-        //          console.log(" $scope.totalItems", data.data.length);
-        //         $scope.totalItems = data.data.length;
-        //         $scope.maxRow = Math.round(data.data.length/10);
-        //         console.log(" $scope.totalItems",$scope.maxRow);
-        //     });
-        // }
+      
         $scope.viewTable();
-        // NavigationService.callApiWithoutData("Match/allMatches", function (data) {
-        //     console.log("after api called", data);
-        //     $scope.items = data.data.data;
-
-        // });
+       
         $scope.setResult = function (data) {
             console.log("button pressed", data);
             NavigationService.callApiWithData("Match/getone", { _id: data }, function (data) {
@@ -1077,6 +1059,40 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
               }
             })
         }
+
+    })
+
+//  .controller('TournamentsResultCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $http) {
+//         $scope.template = TemplateService.changecontent("tournamentResult");
+//         $scope.menutitle = NavigationService.makeactive("tournamentResult");
+//         TemplateService.title = $scope.menutitle;
+//         $scope.navigation = NavigationService.getnav();
+//         data = $state.params.data;
+//         console.log("id", data);
+        
+       
+
+//     })
+     .controller('SetTeamRankCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $http) {
+        $scope.template = TemplateService.changecontent("setTeamRank");
+        $scope.menutitle = NavigationService.makeactive("setTeamRank");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        //   NavigationService.callApiWithoutData("Team/search", function (teamList) {
+        //     console.log("after api called", teamList.data.data);
+        //     $scope.data = editData.data.data
+        // });
+        
+                     $scope.setTournamentPoints = function (data) {
+                   NavigationService.callApiWithoutData("UserBets/tournamentWinner",function(points){
+                        console.log("-----",points.data.value)
+                   })
+                }
+                $scope.setPlyerPoints = function (data) {
+                   NavigationService.callApiWithoutData("UserBets/userPoints",function(points){
+                        console.log("-----",points)
+                   })
+                }
 
     })
 

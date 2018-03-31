@@ -23,7 +23,7 @@ var schema = new Schema({
         type: Number
     },
     answerTeam: {
-        type:String,
+        type: String,
         enum: ['team1', 'team2', 'draw']
     },
     answerFinal: {
@@ -72,51 +72,12 @@ var model = {
             }
         });
     },
+
+    // add points in userbets
+
     addPoints: function (data, callback1) {
-//    update user function
-        //  var updateUser=function(data){
-        //      console.log("aaaaaaaaaaaaaaaa",data.user._id)
-        //       User.update({
-        //         _id: data.user._id
-        //     }, {
-        //             $inc: {
-        //                 points: data.betType.winPoints
-        //             }
-        //         }).exec(function (err, found1) {
-        //             // console.log("FFFFFFFFFFFFFFFf", found1)
-        //             if (err) {
 
-        //             } else if (_.isEmpty(found1)) {
-
-        //             } else {
-        //                 // console.log("found*************", found1);
-
-        //             }
-        //         });
-        //  }
-        //  var updateUserParticipationPoints=function(data){
-        //      console.log("aaaaaaaaaaaaaaaa",data.user._id)
-        //       User.update({
-        //         _id: data.user._id
-        //     }, {
-        //             $inc: {
-        //                 points: data.betType.participationPoints
-        //             }
-        //         }).exec(function (err, found1) {
-        //             // console.log("FFFFFFFFFFFFFFFf", found1)
-        //             if (err) {
-
-        //             } else if (_.isEmpty(found1)) {
-
-        //             } else {
-        //                 // console.log("found*************", found1);
-
-        //             }
-        //         });
-        //  }
-
-
-         //    update userbets function
+        //    update userbets function
         var update = function (data) {
             UserBets.update({
                 _id: data._id
@@ -137,7 +98,7 @@ var model = {
                 });
         }
         var updateParticipationPoints = function (data) {
-           
+
             UserBets.update({
                 _id: data._id
             }, {
@@ -145,13 +106,13 @@ var model = {
                         pointsEarned: data.betType.participationPoints
                     }
                 }).exec(function (err, found1) {
-                    // console.log("FFFFFFFFFFFFFFFf", found1)
+
                     if (err) {
 
                     } else if (_.isEmpty(found1)) {
 
                     } else {
-                        //     console.log("found*************", found1);
+
 
                     }
                 });
@@ -167,30 +128,22 @@ var model = {
             } else if (_.isEmpty(found)) {
                 callback1("noDataound", null);
             } else {
-                // console.log("data", found);
-                // callback1(null, found);
-                // call async
-                async.forEach(found, function (item, index, arr) {
-                    //console.log("data", item);
+                console.log("data", found);
+                async.each(found, function (item, arr) {
 
-                    // update points for tosswinner
                     if (item.betType.betName == 'tossWinner') {
                         if (item.match.tossWinner == item.answerTeam) {
                             update(item)
-                            //updateUser(item)
                         } else {
                             updateParticipationPoints(item)
-                           // updateUserParticipationPoints(item)
                         }
                     }
                     // update points for winner
                     if (item.betType.betName == 'Winner') {
                         if (item.match.winner == item.answerTeam) {
                             update(item)
-                            // updateUser(item)
                         } else {
                             updateParticipationPoints(item)
-                           // updateUserParticipationPoints(item)
                         }
                     }
                     // update points for IstInningScore
@@ -199,12 +152,8 @@ var model = {
                         if (item.match.firstInningScore == item.answer) {
                             console.log("---in if---")
                             update(item)
-                            // updateUser(item)
                         } else if (Math.abs(item.match.firstInningScore - item.answer) <= 5) {
                             console.log("---in if else---", Math.abs(item.match.firstInningScore - item.answer))
-                       
-                        //    userbets update points
-                        
                             UserBets.update({
                                 _id: item._id
                             }, {
@@ -212,136 +161,19 @@ var model = {
                                         pointsEarned: 200
                                     }
                                 }).exec(function (err, found1) {
-                                    // console.log("FFFFFFFFFFFFFFFf", found1)
                                     if (err) {
-
-                                    } else if (_.isEmpty(found1)) {
-
-                                    } else {
-                                        // console.log("found*************", found1);
-
-                                    }
+                                            arr(err,null)
+                                        } else if (_.isEmpty(found1)) {
+                                            arr("nodatafound",null)
+                                        } else {
+                                            arr(null,"data updated")
+                                        }
                                 });
 
-                                 //    user update points
-
-                            //        User.update({
-                            //     _id: item.user._id
-                            // }, {
-                            //         $inc: {
-                            //             points: 200
-                            //         }
-                            //     }).exec(function (err, found1) {
-                            //         // console.log("FFFFFFFFFFFFFFFf", found1)
-                            //         if (err) {
-
-                            //         } else if (_.isEmpty(found1)) {
-
-                            //         } else {
-                            //             // console.log("found*************", found1);
-
-                            //         }
-                            //     });
                         }
                         else if (Math.abs(item.match.firstInningScore - item.answer) <= 20) {
                             console.log("---in if else---", Math.abs(item.match.firstInningScore - item.answer))
-                            
-                             //    userbets update points
-                            
-                            UserBets.update({
-                                _id: item._id
-                            }, {
-                                    $inc: {
-                                        pointsEarned: 100
-                                    }
-                                }).exec(function (err, found1) {
-                                    // console.log("FFFFFFFFFFFFFFFf", found1)
-                                    if (err) {
 
-                                    } else if (_.isEmpty(found1)) {
-
-                                    } else {
-                                        // console.log("found*************", found1);
-
-                                    }
-                                });
-
-                                 //    user update points
-
-                            //      User.update({
-                            //     _id: item.user._id
-                            // }, {
-                            //         $inc: {
-                            //             points: 100
-                            //         }
-                            //     }).exec(function (err, found1) {
-                            //         // console.log("FFFFFFFFFFFFFFFf", found1)
-                            //         if (err) {
-
-                            //         } else if (_.isEmpty(found1)) {
-
-                            //         } else {
-                            //             // console.log("found*************", found1);
-
-                            //         }
-                            //     });
-                        }
-                        else {
-                            console.log("---in else---")
-
-                             //    userbets update points
-
-                            UserBets.update({
-                                _id: item._id
-                            }, {
-                                    $inc: {
-                                        pointsEarned: 20
-                                    }
-                                }).exec(function (err, found1) {
-                                    // console.log("FFFFFFFFFFFFFFFf", found1)
-                                    if (err) {
-
-                                    } else if (_.isEmpty(found1)) {
-
-                                    } else {
-                                        // console.log("found*************", found1);
-
-                                    }
-                                });
-
-                                 //    user update points
-
-                            //        User.update({
-                            //     _id: item.user._id
-                            // }, {
-                            //         $inc: {
-                            //             points: 20
-                            //         }
-                            //     }).exec(function (err, found1) {
-                            //         // console.log("FFFFFFFFFFFFFFFf", found1)
-                            //         if (err) {
-
-                            //         } else if (_.isEmpty(found1)) {
-
-                            //         } else {
-                            //             // console.log("found*************", found1);
-
-                            //         }
-                            //     });
-                        }
-                    }
-
-//update points for player 
-
-                    if (item.betType.betName == 'playerScore') {
-                        console.log("---in 1st inning---")
-                        if (item.match.playerScore == item.answer) {
-                            console.log("---in if---")
-                            update(item)
-                           //  updateUser(item)
-                        } else if (Math.abs(item.match.playerScore - item.answer) <= 5) {
-                            console.log("---in if else---", Math.abs(item.match.playerScore - item.answer))
-                           
                             //    userbets update points
 
                             UserBets.update({
@@ -351,42 +183,21 @@ var model = {
                                         pointsEarned: 100
                                     }
                                 }).exec(function (err, found1) {
-                                    // console.log("FFFFFFFFFFFFFFFf", found1)
-                                    if (err) {
 
-                                    } else if (_.isEmpty(found1)) {
-
-                                    } else {
-                                        // console.log("found*************", found1);
-
-                                    }
+                                     if (err) {
+                                            arr(err,null)
+                                        } else if (_.isEmpty(found1)) {
+                                            arr("nodatafound",null)
+                                        } else {
+                                            arr(null,"data updated")
+                                        }
                                 });
 
-                                 //    user update points
-
-                            //            User.update({
-                            //     _id: item.user._id
-                            // }, {
-                            //         $inc: {
-                            //             points: 100
-                            //         }
-                            //     }).exec(function (err, found1) {
-                            //         // console.log("FFFFFFFFFFFFFFFf", found1)
-                            //         if (err) {
-
-                            //         } else if (_.isEmpty(found1)) {
-
-                            //         } else {
-                            //             // console.log("found*************", found1);
-
-                            //         }
-                            //     });
                         }
-
                         else {
                             console.log("---in else---")
 
-                             //    userbets update points
+                            //    userbets update points
 
                             UserBets.update({
                                 _id: item._id
@@ -395,36 +206,75 @@ var model = {
                                         pointsEarned: 20
                                     }
                                 }).exec(function (err, found1) {
-                                    // console.log("FFFFFFFFFFFFFFFf", found1)
+
                                     if (err) {
+                                            arr(err,null)
+                                        } else if (_.isEmpty(found1)) {
+                                            arr("nodatafound",null)
+                                        } else {
+                                            arr(null,"data updated")
+                                        }
+                                });
 
-                                    } else if (_.isEmpty(found1)) {
+                        }
+                    }
 
-                                    } else {
-                                        // console.log("found*************", found1);
+                    //update points for player 
+
+                    if (item.betType.betName == 'playerScore') {
+                        console.log("---in 1st inning---")
+                        if (item.match.playerScore == item.answer) {
+                            console.log("---in if---")
+                            update(item)
+
+                        } else if (Math.abs(item.match.playerScore - item.answer) <= 5) {
+                            console.log("---in if else---", Math.abs(item.match.playerScore - item.answer))
+
+
+
+                            UserBets.update({
+                                _id: item._id
+                            }, {
+                                    $inc: {
+                                        pointsEarned: 100
+                                    }
+                                }).exec(function (err, found1) {
+
+                                    if (err) {
+                                            arr(err,null)
+                                        } else if (_.isEmpty(found1)) {
+                                            arr("nodatafound",null)
+                                        } else {
+                                            arr(null,"data updated")
 
                                     }
                                 });
 
-                                 //    user update points
+                        }
 
-                            //     User.update({
-                            //     _id: item.user._id
-                            // }, {
-                            //         $inc: {
-                            //             points: 20
-                            //         }
-                            //     }).exec(function (err, found1) {
-                            //         // console.log("FFFFFFFFFFFFFFFf", found1)
-                            //         if (err) {
+                        else {
+                            console.log("---in else---")
 
-                            //         } else if (_.isEmpty(found1)) {
 
-                            //         } else {
-                            //             // console.log("found*************", found1);
 
-                            //         }
-                            //     });
+                            UserBets.update({
+                                _id: item._id
+                            }, {
+                                    $inc: {
+                                        pointsEarned: 20
+                                    }
+                                }).exec(function (err, found1) {
+
+                                     if (err) {
+                                            arr(err,null)
+                                        } else if (_.isEmpty(found1)) {
+                                            arr("nodatafound",null)
+                                        } else {
+                                            arr(null,"data updated")
+
+
+                                    }
+                                });
                         }
                     }
 
@@ -434,36 +284,35 @@ var model = {
 
             callback1(null, "points updated successfully");
         });
-
-
-
-
     },
+
+
+
     tournamentWinner: function (data, callback1) {
         BetType.findOne({
             betName: 'tournamentWinner'
         }).exec(function (err, found) {
-            // console.log("FFFFFFFFFFFFFFFf", found)
+
             if (err) {
                 callback1(err, null);
             } else if (_.isEmpty(found)) {
                 callback1("noDataound", null);
             } else {
-                console.log("found*************", found._id);
+                callback1("null",found)
 
                 // update uerbets points
 
                 UserBets.find({
                     "betType": found._id
                 }).deepPopulate('betType answerFinal').exec(function (err, found1) {
-                    // console.log("FFFFFFFFFFFFFFFf", found)
+
                     if (err) {
                         callback1(err, null);
                     } else if (_.isEmpty(found1)) {
                         callback1("noDataound", null);
                     } else {
-                        // console.log("found*************", found1);
-                        async.forEach(found1, function (item, index, arr) {
+
+                        async.each(found1, function (item, arr) {
                             console.log("found*************", item);
                             if (item.answerFinal.rank == 1) {
                                 console.log("******in if*******");
@@ -474,85 +323,85 @@ var model = {
                                             pointsEarned: item.betType.winPoints
                                         }
                                     }).exec(function (err, found1) {
-                                        // console.log("FFFFFFFFFFFFFFFf", found1)
+
                                         if (err) {
-
+                                            arr(err,null)
                                         } else if (_.isEmpty(found1)) {
-
+                                            arr("nodatafound",null)
                                         } else {
-                                            console.log("found*************", found1);
+                                            arr(null,"data updated")
 
                                         }
                                     });
-
-                                    // update user points
-
-                                //       User.update({
-                                //     _id: item.user._id
-                                // }, {
-                                //         $inc: {
-                                //             points: item.betType.winPoints
-                                //         }
-                                //     }).exec(function (err, found1) {
-                                //         // console.log("FFFFFFFFFFFFFFFf", found1)
-                                //         if (err) {
-
-                                //         } else if (_.isEmpty(found1)) {
-
-                                //         } else {
-                                //             console.log("found*************", found1);
-
-                                //         }
-                                //     });
                             }
                             else {
-                                    partialPoints=5000-(item.answerFinal.rank*600);
+                                partialPoints = 5000 - (item.answerFinal.rank * 600);
 
-                                     // update uerbets points
+                                // update uerbets points
 
-                                    UserBets.update({
+                                UserBets.update({
                                     _id: item._id
                                 }, {
                                         $inc: {
                                             pointsEarned: partialPoints
                                         }
                                     }).exec(function (err, found1) {
-                                        // console.log("FFFFFFFFFFFFFFFf", found1)
+
                                         if (err) {
-
+                                            arr(err,null)
                                         } else if (_.isEmpty(found1)) {
-
+                                            arr("noDataFound",null)
                                         } else {
-                                            console.log("found*************", found1);
+                                            (err,"points updated ")
 
                                         }
                                     });
-
-                                    // update userPoints
-
-                                //           User.update({
-                                //     _id: item.user._id
-                                // }, {
-                                //         $inc: {
-                                //             points: partialPoints
-                                //         }
-                                //     }).exec(function (err, found1) {
-                                //         // console.log("FFFFFFFFFFFFFFFf", found1)
-                                //         if (err) {
-
-                                //         } else if (_.isEmpty(found1)) {
-
-                                //         } else {
-                                //             console.log("found*************", found1);
-
-                                //         }
-                                //     });
                             }
                         });
                     }
                 });
             }
         })
+    },
+
+
+    userPoints: function (data, callback1) {
+        UserBets.aggregate(
+            {
+                $group: {
+                    _id: "$user",
+                    "sum": { "$sum": "$pointsEarned" }
+                }
+            })
+            .exec(function (err, found1) {
+                if (err) {
+                    callback1(err, null);
+                } else if (_.isEmpty(found1)) {
+                    callback1("noDataFound", null);
+                } else {
+                    console.log("found*************", found1);
+                    callback1(null, found1)
+                    async.each(found1, function (item, cb) {
+                        console.log("item", item);
+                        User.findOneAndUpdate({ _id: item._id }, {
+                            $inc: {
+                                points: item.sum
+                            }
+                        }).exec(function (err, result) {
+                            if (err) {
+                                cb(err, null);
+                            }
+                            else if (_.isEmpty(result)) {
+                                cb("noDataFound", null);
+                            }
+                            else {
+                                console.log("*************", result);
+                                cb(null, result)
+                            }
+                        })
+                    })
+                }
+            })
     }
 
 

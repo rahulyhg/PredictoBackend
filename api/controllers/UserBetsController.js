@@ -13,32 +13,7 @@ var controller = {
             });
         }
     },
-    // updatePoints: function (req, res) {
-    //     console.log(req.body)
-    //     if (req.body) {
-    //         UserBets.updatePoints(req.body, res.callback);
-    //     } else {
-    //         res.json({
-    //             value: false,
-    //             data: {
-    //                 message: "Invalid Request"
-    //             }
-    //         });
-    //     }
-    // },
-    // updateParticipatePoints: function (req, res) {
-    //     console.log(req.body)
-    //     if (req.body) {
-    //         UserBets.updateParticipatePoints(req.body, res.callback);
-    //     } else {
-    //         res.json({
-    //             value: false,
-    //             data: {
-    //                 message: "Invalid Request"
-    //             }
-    //         });
-    //     }
-    // }
+   
 addPoints: function (req, res) {
         console.log(req.body)
         if (req.body) {
@@ -64,7 +39,20 @@ addPoints: function (req, res) {
                 }
             });
         }
+    },
+    userPoints: function (req, res) {
+        if (req.body) {
+            UserBets.userPoints(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
     }
+
 
 };
 module.exports = _.assign(module.exports, controller);

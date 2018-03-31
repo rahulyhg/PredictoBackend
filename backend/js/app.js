@@ -98,7 +98,17 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/setResult/:data",
             templateUrl: "views/template.html",
             controller: 'SetMatchResultCtrl'
+        })
+         .state('setTeamRank', {
+            url: "/setTeamRank",
+            templateUrl: "views/template.html",
+            controller: 'SetTeamRankCtrl'
         });
+        //  .state('setResult', {
+        //     url: "/setResult/:data",
+        //     templateUrl: "views/template.html",
+        //     controller: 'SetMatchResultCtrl'
+        // });
 
     $urlRouterProvider.otherwise("/dashboard");
     $locationProvider.html5Mode(isproduction);

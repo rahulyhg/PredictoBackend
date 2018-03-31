@@ -38,6 +38,12 @@ myApp.factory('NavigationService', function ($http) {
             classis: "active",
             uiSref: "matchResult",
             icon: "phone"
+        },
+         {
+            name: "Set Team Rank",
+            classis: "active",
+            uiSref: "setTeamRank",
+            icon: "phone"
         }
     ];
 

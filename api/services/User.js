@@ -35,7 +35,7 @@ var schema = new Schema({
             }
         }]
     },
-     socailLoginPhoto: {
+    socailLoginPhoto: {
         type: String,
         default: "",
         excel: [{
@@ -116,29 +116,29 @@ var model = {
         User.findOneAndUpdate({
             mobile: mobile
         }, {
-            password: md5(password)
-        }, {
-            new: true
-        }).exec(function (err, found) {
-            if (err) {
-                callback(err, null);
-            } else if (_.isEmpty(found)) {
-                callback(null, "noDataound");
-            } else {
-                User.find({
-                    mobile: mobile
-                }).exec(function (err, created) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(created)) {
-                        callback("noDataound", null);
-                    } else {
-                        callback(null, created);
-                    }
-                });
-            }
+                password: md5(password)
+            }, {
+                new: true
+            }).exec(function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback(null, "noDataound");
+                } else {
+                    User.find({
+                        mobile: mobile
+                    }).exec(function (err, created) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(created)) {
+                            callback("noDataound", null);
+                        } else {
+                            callback(null, created);
+                        }
+                    });
+                }
 
-        });
+            });
     },
 
     getUserforSocailLogin: function (screenName, callback) {
@@ -264,7 +264,7 @@ var model = {
                 delete data.forgotPassword;
                 delete data.otp;
                 data.googleAccessToken = user.googleAccessToken;
-                data.save(function () {});
+                data.save(function () { });
                 callback(err, data);
             }
         });
@@ -315,7 +315,7 @@ var model = {
             "_id": id
         }).exec(function (err, data) {
             data.googleAccessToken = accessToken;
-            data.save(function () {});
+            data.save(function () { });
         });
     },
     /**
@@ -344,25 +344,25 @@ var model = {
         User.findOneAndUpdate({
             "_id": data.id
         }, {
-            name: data.userName,
-            dob:data.dob,
-            email: data.userEmail,
-            points:data.points
-        }, {
-            multi: true
-        }).exec(function (err, found) {
-            if (err) {
-                callback1(err, null);
-            } else if (_.isEmpty(found)) {
-                callback1("noDataFound", null);
-            } else {
-                console.log("-----------", found)
-                callback1(null, "Data updated Successfully");
-            }
-        });
+                name: data.userName,
+                dob: data.dob,
+                email: data.userEmail,
+                points: data.points
+            }, {
+                multi: true
+            }).exec(function (err, found) {
+                if (err) {
+                    callback1(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback1("noDataFound", null);
+                } else {
+                    console.log("-----------", found)
+                    callback1(null, "Data updated Successfully");
+                }
+            });
     },
 
-     sendOtp: function (mobile, userId, callback) {
+    sendOtp: function (mobile, userId, callback) {
         console.log("inside send otp", mobile, userId)
         var emailOtp = (Math.random() + "").substring(2, 6);
         var foundData = {};
@@ -370,20 +370,21 @@ var model = {
             // _id: userId,
             mobile: mobile
         }, {
-            otp: emailOtp
-        }).exec(function (err, found) {
-            if (err) {
-                callback(err, null);
-            } else if (_.isEmpty(found)) {
-                callback("noDataound", null);
-            } else {
-                callback(null, found);
-            
+                otp: emailOtp
+            }).exec(function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback("noDataound", null);
+                } else {
+                    callback(null, found);
 
-            }
 
-        });
-    }, verifyOTPForResetPass: function (otp, _id, callback) {
+                }
+
+            });
+    },
+    verifyOTPForResetPass: function (otp, _id, callback) {
         console.log("*********************", otp)
         User.findOne({
             otp: otp
@@ -393,11 +394,11 @@ var model = {
             } else if (_.isEmpty(found)) {
                 callback("noDatafound", null);
             } else {
-                
-                dataToSave={}
-                dataToSave.otp=''
-                 dataToSave._id=found._id
-                 console.log("************************",dataToSave)
+
+                dataToSave = {}
+                dataToSave.otp = ''
+                dataToSave._id = found._id
+                console.log("************************", dataToSave)
                 User.saveData(dataToSave, function (err, created) {
                     if (err) {
                         callback(err, null);
@@ -409,7 +410,8 @@ var model = {
                 });
             }
         });
-    }
+    },
+
 
 };
 module.exports = _.assign(module.exports, exports, model);
